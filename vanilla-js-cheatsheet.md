@@ -1,6 +1,6 @@
 ## Vanilla JavaScript Quick Reference / Cheatsheet
 
-Just migrated it from Codepen.io to markdown. Credit goes to [David Conner](Vanilla JavaScript Quick Reference / Cheatsheet).
+Just migrated it from Codepen.io to markdown. Credit goes to [David Conner](https://github.com/davidicus).
 
 
 | Working with DOM         | Working with JS         | Working With Functions |
