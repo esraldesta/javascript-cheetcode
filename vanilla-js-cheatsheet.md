@@ -1,4 +1,4 @@
-## Vanilla JavaScript Quick Reference / Cheatsheet
+﻿## Vanilla JavaScript Quick Reference / Cheatsheet
 
 Just migrated it from Codepen.io to markdown. Credit goes to [David Conner](https://github.com/davidicus).
 
@@ -6,7 +6,7 @@ Just migrated it from Codepen.io to markdown. Credit goes to [David Conner](http
 | Working with DOM         | Working with JS         | Working With Functions |
 | -------------------------|-------------------------|----------------------- |
 | [Accessing Dom Elements](#accessing-dom-elements)| [Add/Remove Array Item](#addremove-array-item) | [Add Default Arguments to Function](#add-default-arguments-to-function) |
-| [Grab Children/Parent Node(s)](#grab-childrenparent-nodes)| [Add/Remove Object Properties](#addremove-object-properties) | [Throttle Functions on Resize](#throttle-functions-on-resize) |
+| [Grab Children/Parent Node(s)](#grab-childrenparent-nodes)| [Add/Remove Object Properties](#addremove-object-properties) | [Throttle/Debounce Functions](#throttle-functions-on-resize) |
 | [Create DOM Elements](#create-new-dom-elements)| [Conditionals](#conditionals) | |
 | [Add Elements to the DOM](#add-elements-to-the-dom)| [Loops](#loops) | |
 | [Add/Remove/Toggle/Check Classes](#add-elements-to-the-dom-cont)| [Events](#events) | |
@@ -19,34 +19,32 @@ Just migrated it from Codepen.io to markdown. Credit goes to [David Conner](http
 
 ```javascript
 // Returns a reference to the element by its ID.
-document.getElementById(id);
+document.getElementById('someid');
 
 // Returns an array-like object of all child elements which have all of the given class names.
-document.getElementsByClassName(names);
+document.getElementsByClassName('someclass');
 
-// Returns an HTMLCollection of elements with the given tag name. 
-document.getElementsByTagName(name);
+// Returns an HTMLCollection of elements with the given tag name.
+document.getElementsByTagName('LI');
 
 // Returns the first element within the document that matches the specified group of selectors.
-document.querySelector(selectors);
+document.querySelector('.someclass');
 
-// Returns a list of the elements within the document (using depth-first pre-order traversal of the document's nodes) 
-// that match the specified group of selectors. 
-document.querySelectorAll(selectors);
+// Returns a list of the elements within the document (using depth-first pre-order traversal of the document's nodes)
+// that match the specified group of selectors.
+document.querySelectorAll('div.note, div.alert');
 ```
 
 #### Grab Children/Parent Node(s)
 
 ```javascript
 // Get child nodes
-var stored = document.getElementById('heading');
+var stored = document.getElementById('someid');
 var children = stored.childNodes;
-console.log(children);
 
 // Get parent node
 var parental = children.parentNode;
 ```
-
 
 #### Create New DOM Elements
 
@@ -56,12 +54,12 @@ var newHeading = document.createElement('h1');
 var newParagraph = document.createElement('p');
 
 // create text nodes for new elements
-var h1Text= document.createTextNode("This is the fucking header text!");
-var paraText= document.createTextNode("This is the fucking Paragraph text!");
+var h1Text= document.createTextNode('This is a nice header text!');
+var pText= document.createTextNode('This is a nice paragraph text!');
 
 // attach new text nodes to new elements
 newHeading.appendChild(h1Text);
-newParagraph.appendChild(paraText);
+newParagraph.appendChild(pText);
 
 // elements are now created and ready to be added to the DOM.
 ```
@@ -89,17 +87,18 @@ parent.insertBefore(newHeading, firstHeading);
 
 Suppose you have the following HTML:
 ```html
-<div id="box1">
+<div id='box1'>
   <p>Some example text</p>
 </div>
-<div id="box2">
+<div id='box2'>
   <p>Some example text</p>
 </div>
 ```
 
+You can insert another snippet of HTML between #box1 and #box2:
+
 ```javascript
-// you can insert another snippet of HTML between #box1 and #box2 
-var box2 = document.getElementById("box2");
+var box2 = document.getElementById('box2');
 box2.insertAdjacentHTML('beforebegin', '<div><p>This gets inserted.</p></div>');
 
 // beforebegin - The HTML would be placed immediately before the element, as a sibling.
@@ -115,20 +114,20 @@ box2.insertAdjacentHTML('beforebegin', '<div><p>This gets inserted.</p></div>');
 var firstHeading = document.getElementById('firstHeading');
 
 // will remove foo if it is a class of firstHeading
-firstHeading.classList.remove("foo");
+firstHeading.classList.remove('foo');
 
-// will add the class "anotherClass" if one does not already exist
-firstHeading.classList.add("anotherclass");
+// will add the class 'anotherClass' if one does not already exist
+firstHeading.classList.add('anotherclass');
 
 // add or remove multiple classes
-firstHeading.classList.add("foo","bar"); 
-firstHeading.classList.remove("foo","bar");
+firstHeading.classList.add('foo', 'bar');
+firstHeading.classList.remove('foo', 'bar');
 
 // if visible class is set remove it, otherwise add it
-firstHeading.classList.toggle("visible");
+firstHeading.classList.toggle('visible');
 
-// will return true if it has class of "foo" or false if it does not
-firstHeading.classList.contains("foo");
+// will return true if it has class of 'foo' or false if it does not
+firstHeading.classList.contains('foo');
 ```
 
 #### Add/Remove Array Item
@@ -138,7 +137,7 @@ firstHeading.classList.contains("foo");
 var myArray = [];
 
 // create array with items. Can store any type
-var myOtherArray = [myArray, true, "A random string"];
+var myOtherArray = [myArray, true, 'a random string'];
 
 // call specific value in an array
 myOtherArray[0];
@@ -150,18 +149,16 @@ myOtherArray[0] = false;
 
 
 // add to end of array
-myOtherArray[myOtherArray.length] = "new stuff";
-// will return the new item "new stuff"
+myOtherArray[myOtherArray.length] = 'new stuff';
+// will return the new item 'new stuff'
 
 // or you can use push()
-myOtherArray.push("new stuff");
+myOtherArray.push('new stuff');
 // will return new length of array
-
 
 // you can remove this last item by using pop()
 myOtherArray.pop();
 // will return the last item of the array and will have removed it from myOtherArray
-
 
 // shift and unshift will do the same for the begging of the Array
 myOtherArray.shift();
@@ -172,7 +169,7 @@ myOtherArray.unshift(1,2);
 
 // you can use delete keyword but turn value to undefine and not shorten length. so we use splice()
 myOtherArray.splice(2, 1);
-// this will remove and return  the third item only. 
+// this will remove and return  the third item only.
 // first arg is where to start and second is how many things to splice. this example is 1.
 ```
 
@@ -183,12 +180,12 @@ myOtherArray.splice(2, 1);
 var newObject = {};
 
 // add a property to object
-newObject.newPropName = "super fly";
+newObject.newPropName = 'super slick';
 
 // or other syntax
-newObject['other new prop name'] = "mildly fly";
+newObject['other new prop name'] = 'mildly slick';
 
-// Now newObject.newPropName will return super fly
+// Now newObject.newPropName will return 'super slick'
 newObject.newPropName;
 
 // now to delete
@@ -202,7 +199,7 @@ delete newObject.newPropName;
 var a = 1;
 var b = 2;
 
-if( a < b ) {
+if (a < b) {
   console.log('the if is true!');
 } else {
   console.log('the if is false!');
@@ -214,12 +211,12 @@ var a = 1;
 var b = 2;
 var c = 3;
 
-if( a > b ) {
-  console.log('the if is true!');
-} else if(a > c) {
-  console.log('OK, THIS if is Ture!');
+if (a > b) {
+  console.log('a is bigger than b');
+} else if (a > c) {
+  console.log('but a is bigger than c');
 } else {
-  console.log('None of these were true');
+  console.log('a is the smallest');
 }
 
 
@@ -232,23 +229,23 @@ a === b ? console.log('The statement is true') : console.log('The statement is f
 // switch statements
 var a = 4;
 switch (a) {
-  case "Oranges":
-    console.log("Orange? really?");
+  case 'Oranges':
+    console.log('Orange? really?');
     break;
   case 1:
-    console.log("a is equal to 1.");
+    console.log('a is equal to 1.');
     break;
   case 2:
-    console.log("a is equal to 2.");
+    console.log('a is equal to 2.');
     break;
   case 3:
-    console.log("a is equal to 3.");
+    console.log('a is equal to 3.');
     break;
   case 4:
-    console.log("a is equal to 4.");
+    console.log('a is equal to 4.');
     break;
   default:
-    console.log("I run if no one else is true.");
+    console.log('I run if no one else is true.');
 }
 ```
 
@@ -257,7 +254,7 @@ switch (a) {
 ```javascript
 // while loop
 var i = 0;
-while( i < 10 ) {
+while (i < 10) {
   console.log(i);
   i += 1
 }
@@ -268,26 +265,26 @@ var i = 0;
 do {
   console.log(i);
   i += 1
-} while( i < 10 )
+} while (i < 10)
 
 
 // for loop
-for ( var i = 0; i < 10; i++ ) {
+for (var i = 0; i < 10; i++) {
    console.log(i);
 }
 
 // for in statments
 var obj = {a:1, b:2, c:3};
-    
-for ( var prop in obj ) {
+
+for (var prop in obj) {
   // check if property is inherited or not
-  if(obj.hasOwnProperty(prop)) {
-    console.log("obj." + prop + " = " + obj[prop]);
+  if (obj.hasOwnProperty(prop)) {
+    console.log('obj.' + prop + ' = ' + obj[prop]);
   }
 }
 ```
 
-#### Events
+#### Events ([MDN Event reference](https://developer.mozilla.org/en-US/docs/Web/Events))
 
 ```javascript
 var newElement = document.getElementsByTagName('h1');
@@ -296,17 +293,15 @@ newElement.onclick = function() {
   console.log('clicked');
 };
 
-newElement.addEventListener("focus", function(event) {
-    console.log('focused');
-}, false);
+var logEventType = function(e) {
+    console.log('event type:', e.type);
+};
 
-newElement.removeEventListener("focus", function(event) {
-    console.log('focused');
-}, false);
-
+newElement.addEventListener('focus', logEventType, false);
+newElement.removeEventListener('focus', logEventType, false);
 
 window.onload = function() {
-  console.log("Im loaded");
+  console.log('Im loaded');
 };
 ```
 
@@ -314,7 +309,7 @@ window.onload = function() {
 
 ```javascript
 function simpleMessage() {
-  alert("This is just a simple alert");
+  alert('This is just a simple alert');
 }
 
 // set time out
@@ -337,106 +332,118 @@ window.clearInterval(intervalHandle);
 
 ```javascript
 var myNumber = 1;
-var myString = "some Text";
+var myString = 'some Text';
 var bools = true;
 var myArray = [];
 var myObj = {};
 var notNumber = NaN;
 var nullified = null;
+var undef;
 
 typeof myNumber;
-// returns "number"
+// returns 'number'
 
 typeof myString;
-// returns "string"
+// returns 'string'
 
 typeof bools;
-// returns "boolean"
+// returns 'boolean'
 
 typeof myArray;
-// returns "object". 
+// returns 'object'.
 
 // Not super helpful so must check if it has length property to see if it is an array.
 typeof myArray === 'object' && myArray.hasOwnProperty('length');
 // returns true
 
 typeof myObj;
-// returns "object". Must do the same test as above but expect false back from check.
+// returns 'object'. Must do the same test as above but expect false back from check.
 
 typeof notNumber;
-// returns "number". this is confusing but returns this as NaN is part of the global Number object.
+// returns 'number'. this is confusing but returns this as NaN is part of the global Number object.
 
 // must check if isNaN()
 typeof notNumber === 'number' && isNaN(notNumber);
-// returns true if type of is "number" and is still NaN
+// returns true if type of is 'number' and is still NaN
+
+typeof undef;
+// returns 'undefined'
+
+undef === undefined && typeof undef === 'undefined';
+// returns 'true'
+
+notDeclared === undefined;
+// -> Uncaught ReferenceError: notDeclared is not defined
 ```
 
-#### Add Default Arguments to Function
+#### Add default arguments to a function
 
 ```javascript
-// you provide defaults inside your function
-
-var myFunction = function myFunction(arg1, arg2) {
-  var arg1 = (typeof arg1 !== 'undefined') ? arg1 : "default argument one";
-  var arg2 = (typeof arg2 !== 'undefined') ? arg2 : "default argument two";
+var myFunc = function (arg1='default argument one', arg2='default argument two') {
   console.log(arg1 + " & " + arg2);
 };
+
+myFunc(undefined, 'and a new value'); // logs 'default argument one & and a new value'
 ```
 
-#### Throttle Functions on Resize
+#### Throttle function on resize (debounce)
 
 ```javascript
-var optimizedResize = (function() {
+var helpers = {
+  /**
+   * debouncing, executes the function if there was no new event in $wait milliseconds
+   * @param func
+   * @param wait
+   * @param scope
+   * @returns {Function}
+   */
+  debounce: function(func, wait, scope) {
+    var timeout;
+    return function() {
+      var context = scope || this, args = arguments;
+      var later = function() {
+        timeout = null;
+        func.apply(context, args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  },
 
-  var callbacks = [];
-  var running = false;
+  /**
+   * In case of a "storm of events", this executes once every $threshold
+   * @param fn
+   * @param threshold
+   * @param scope
+   * @returns {Function}
+   */
+  throttle: function(fn, threshold, scope) {
+    threshold || (threshold = 250);
+    var last, deferTimer;
 
-  // fired on resize event
-  function resize() {
+    return function() {
+      var context = scope || this;
+      var now = +new Date, args = arguments;
 
-    if (!running) {
-      running = true;
-
-      if (window.requestAnimationFrame) {
-        window.requestAnimationFrame(runCallbacks);
+      if (last && now < last + threshold) {
+        // Hold on to it
+        clearTimeout(deferTimer);
+        deferTimer = setTimeout(function() {
+          last = now;
+          fn.apply(context, args);
+        }, threshold);
       } else {
-          setTimeout(runCallbacks, 66);
+        last = now;
+        fn.apply(context, args);
       }
-    }
-
+    };
   }
+};
 
-  // run the actual callbacks
-  function runCallbacks() {
-    callbacks.forEach(function(callback) {
-      callback();
-    });
-    running = false;
-  }
+var resizeHandler = function(){
+  console.log('do stuff');
+};
 
-  // adds callback to loop
-  function addCallback(callback) {
-    if (callback) {
-      callbacks.push(callback);
-    }
-  }
-  
-  return {
-    // initalize resize event listener
-    init: function(callback) {
-      window.addEventListener('resize', resize);
-      addCallback(callback);
-    },
-    // public method to add additional callback
-    add: function(callback) {
-      addCallback(callback);
-    }
-  }
-  
-}());
-
-// start process
-optimizedResize.init(function() {
-    console.log('Resource conscious resize callback!')
-});
+// Debounce by waiting 0.25s (250ms) with "this" context
+window.addEventListener('resize', helpers.debounce(resizeHandler, 250, this));
 ```
