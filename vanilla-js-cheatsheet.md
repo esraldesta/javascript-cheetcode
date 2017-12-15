@@ -5,8 +5,8 @@ Just migrated it from Codepen.io to markdown. Credit goes to [David Conner](http
 
 | Working with DOM         | Working with JS         | Working With Functions |
 | -------------------------|-------------------------|----------------------- |
-| [Accessing Dom Elements](#accessing-dom-elements)| [Add/Remove Array Item](#addremove-array-item) | [Add Default Arguments to Function](#add-default-arguments-to-function) |
-| [Grab Children/Parent Node(s)](#grab-childrenparent-nodes)| [Add/Remove Object Properties](#addremove-object-properties) | [Throttle/Debounce Functions](#throttle-functions-on-resize) |
+| [Accessing Dom Elements](#accessing-dom-elements)| [Add/Remove Array Item](#addremove-array-item) | [Add Default Arguments to Function](#add-default-arguments-to-a-function) |
+| [Grab Children/Parent Node(s)](#grab-childrenparent-nodes)| [Add/Remove Object Properties](#addremove-object-properties) | [Throttle/Debounce Functions](#throttle-or-debounce-functions-calls) |
 | [Create DOM Elements](#create-new-dom-elements)| [Conditionals](#conditionals) | |
 | [Add Elements to the DOM](#add-elements-to-the-dom)| [Loops](#loops) | |
 | [Add/Remove/Toggle/Check Classes](#add-elements-to-the-dom-cont)| [Events](#events) | |
@@ -386,7 +386,7 @@ var myFunc = function (arg1='default argument one', arg2='default argument two')
 myFunc(undefined, 'and a new value'); // logs 'default argument one & and a new value'
 ```
 
-#### Throttle function on resize (debounce)
+#### Throttle or Debounce Functions Calls
 
 ```javascript
 var helpers = {
